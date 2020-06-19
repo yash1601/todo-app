@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+	<div style="background-color: green;"><p id="success"></p></div>
+	<div style="background-color: red;"><p id="error"></p></div>
+	<div class="col-md-8" >
+		<div class="task-add" style="border-width: 0.3px; border-color: #906B31;border-style: groove; ">
+  		
+		<form method="POST" action="" style="padding-left: 15px;">
+			{{ form.hidden_tag() }}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Add a new task here</legend>
+				<div class="form-group" >
+					{{ form.title.label(class="form-control-label") }}
+					{{ form.title(class="form-control form-control-lg") }}
+
+				</div>
+				
+				<div class="form-group" >
+					{{ form.priority.label(class="form-control-label") }}
+					{{ form.priority }}
+
+				</div>
+				<div class="form-group" style="padding-top: 5px;">
+					{{ form.category.label(class="form-control-label") }}
+					{{ form.category }}
+
+				</div>
+			</fieldset>
+			<div class="form-group" style="padding-top: 10px;">
+				{{ form.submit(class="btn btn-outline-info") }}
+			</div>
+
+		
+
+		</form>
+	</div>
+</div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<h2>cat 1</h2>
+		<ul>
+			{% for task in list1 %}
+				<li>{{ task.name }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="col-md-3">
+		<h2>cat 1</h2>
+		<ul>
+			{% for task in list2 %}
+				<li>{{ task.name }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="col-md-3">
+		<h2>cat 1</h2>
+		<ul>
+			{% for task in list3 %}
+				<li>{{ task.name }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="col-md-3">
+		<h2>cat 1</h2>
+		<ul>
+			{% for task in list4 %}
+				<li>{{ task.name }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+{% endblock content %}
+

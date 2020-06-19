@@ -1,0 +1,31 @@
+body {
+  background-color: #E9FEEE;
+  color: #333333;
+  margin-top: 5rem;
+}
+
+.navbar-default {
+	background-color: #906B31;
+
+}
+
+.account-link {
+	color: #121212;
+}
+
+.navbar-brand {
+	color: #249DCD  ;
+}
+
+.btn {
+	padding-right: 20px;
+	background-color: #249DCD ;
+	opacity: 1;
+  	transition: 1s;
+  	border-style: double;
+}
+
+.btn:hover {
+	opacity: 0.7;
+	border-style: double;
+}
