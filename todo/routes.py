@@ -109,3 +109,10 @@ def account():
 def logout():
 	logout_user()
 	return redirect(url_for('home'))
+
+
+@app.route("/full-list/<int:catname>", methods=['POST', 'GET'])
+@login_required
+def list(catname):
+	data = Task.query.filter_by(category = catname)
+	return render_template('full_list.html', title = 'full-list', data = data)

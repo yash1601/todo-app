@@ -39,23 +39,26 @@
 </div>
 <div class="row">
 	<div class="col-md-3">
-		<h2>cat 1</h2>
+		<div style="background-color: #A5FDFD;"><h3 style="border-left: 5px solid #249DCD; padding left: 5px;">PERSONAL</h3></div>
 		<ul>
 			{% for task in list1 %}
 				<li>{{ task.name }}</li>
 			{% endfor %}
 		</ul>
 	</div>
+	
 	<div class="col-md-3">
-		<h2>cat 1</h2>
+		<div style="background-color: #A5FDFD;"><a href="{{ url_for('list', catname = 2) }}"><h3 style="border-left: 5px solid #249DCD; padding left: 5px;">WORK</h3></a></div>
+ 
 		<ul>
 			{% for task in list2 %}
 				<li>{{ task.name }}</li>
 			{% endfor %}
 		</ul>
 	</div>
+	
 	<div class="col-md-3">
-		<h2>cat 1</h2>
+		<div style="background-color: #A5FDFD;"><a href="{{ url_for('list', catname = 3) }}"><h3 style="border-left: 5px solid #249DCD; padding left: 5px;">SHOPPING</h3></a></div>
 		<ul>
 			{% for task in list3 %}
 				<li>{{ task.name }}</li>
@@ -63,7 +66,8 @@
 		</ul>
 	</div>
 	<div class="col-md-3">
-		<h2>cat 1</h2>
+
+		<div style="background-color: #A5FDFD;"><h3 style="border-left: 5px solid #249DCD; padding left: 5px;">OTHER</h3></div>
 		<ul>
 			{% for task in list4 %}
 				<li>{{ task.name }}</li>
