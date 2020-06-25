@@ -1,8 +1,58 @@
 {% extends "layout.html" %}
 {% block content %}
-<ul>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style>
+<div class="row">
+	<div class="col-md-4">
 	{% for task in data %}
-		<li>{{ task.name }}</li>
-	{% endfor %}
-</ul>
+	
+	<article class="media content-section" >
+          
+          <form method="POST" action="{{ url_for('checkoff', test_id=task.id) }}" style="padding-bottom: 5px;">
+            <div title="check off this item">
+            <button>
+
+                <i class="fa fa-check-square" aria-hidden="true"></i>
+                             
+            </button>
+        	</div>
+             <script type="text/javascript">
+                function myFunction() {
+                  document.getElementById("clicked").style.color = "green";
+                }
+              </script>
+
+          </form>
+      
+      
+          <h4 style="color: #249DCD"> {{ task.name }} </h4>
+        
+      </article>
+      <hr style="border-color: brown;">
+      {% endfor %}
+</div>
+</div>
 {% endblock content %}

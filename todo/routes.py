@@ -12,10 +12,14 @@ from todo.models import User, Task
 @login_required
 def home():
 	form = TaskForm()
-	list1 = Task.query.filter_by(category = 1)
-	list2 = Task.query.filter_by(category = 2)
-	list3 = Task.query.filter_by(category = 3)
-	list4 = Task.query.filter_by(category = 4)
+	list1 = Task.query.filter_by(category = 1, status = 1)
+	list2 = Task.query.filter_by(category = 2, status = 1)
+	list3 = Task.query.filter_by(category = 3, status = 1)
+	list4 = Task.query.filter_by(category = 4, status = 1)
+	list5 = Task.query.filter_by(status = 2)
+	empty = 0
+	if not list5:
+		empty = 1
 	if form.validate_on_submit():
 		newtitle = form.title.data
 		newpriority = form.priority.data
@@ -44,7 +48,7 @@ def home():
 		db.session.commit()
 		return redirect(url_for('home'))
 
-	return render_template('home.html', form = form, list1 = list1, list2 = list2, list3 = list3, list4 =list4)
+	return render_template('home.html', form = form, list1 = list1, list2 = list2, list3 = list3, list4 =list4, list5 = list5, empty = empty)
 
 
 
@@ -114,5 +118,27 @@ def logout():
 @app.route("/full-list/<int:catname>", methods=['POST', 'GET'])
 @login_required
 def list(catname):
-	data = Task.query.filter_by(category = catname)
+	data = Task.query.filter_by(category = catname, status = 1)
 	return render_template('full_list.html', title = 'full-list', data = data)
+
+
+@app.route("/checkoff/<int:test_id>", methods=['POST', 'GET'])
+@login_required
+def checkoff(test_id):
+	task = Task.query.get(test_id)
+	var = task.category
+	setattr(task, "status", task.status+1)
+	db.session.commit()
+	flash('Item checked off', 'success')
+	return redirect(url_for('list', catname = var))
+
+
+@app.route("/clear", methods=['POST', 'GET'])
+@login_required
+def clear():
+	tasks = Task.query.filter_by(status = 2)
+	for i in tasks:
+		db.session.delete(i)
+		db.session.commit()
+
+	return redirect(url_for('home'))
