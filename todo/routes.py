@@ -1,7 +1,7 @@
 import os
 import secrets
 from flask import render_template,url_for, flash,  redirect, request, abort, session, jsonify
-from todo.forms import LoginForm, RegistrationForm, UpdateForm, choices, TaskForm
+from todo.forms import LoginForm, RegistrationForm, UpdateForm, choices, TaskForm, SearchForm, choices2, PwdForm
 from flask_login import login_user, current_user, logout_user, login_required
 from todo.__init__ import db, app
 from todo.models import User, Task
@@ -112,14 +112,35 @@ def account():
 @app.route("/logout")
 def logout():
 	logout_user()
-	return redirect(url_for('home'))
+	return redirect(url_for('login'))
 
 
-@app.route("/full-list/<int:catname>", methods=['POST', 'GET'])
+@app.route("/full-list/<catname>/<sort>/<name>", methods=['POST', 'GET'])
 @login_required
-def list(catname):
-	data = Task.query.filter_by(category = catname, status = 1)
-	return render_template('full_list.html', title = 'full-list', data = data)
+def list(catname, sort, name):
+	if name == '0':
+		if sort == 'priority':
+			data1 = Task.query.filter_by(category = catname, status = 1).order_by(Task.priority.desc()).all()
+		elif sort == 'adding order' :
+			data1 = Task.query.filter_by(category = catname, status = 1).order_by(Task.id.desc()).all()
+		elif sort == 'none' :
+			data1 = Task.query.filter_by(category = catname, status = 1)
+
+	else :
+		if sort == 'priority':
+			data1 = Task.query.filter_by(name = name, category = catname, status = 1).order_by(Task.priority.desc()).all()
+		elif sort == 'adding order':
+			data1 = Task.query.filter_by(name = name, category = catname, status = 1).order_by(Task.id.desc()).all()
+		elif sort == 'none' :
+			data1 = Task.query.filter_by(name = name, category = catname, status = 1).all()
+
+	form = SearchForm()
+	num = catname
+	if form.validate_on_submit():
+		newname = form.name.data
+		newnum = dict(choices2).get(form.sort.data)
+		return redirect(url_for('list', catname = num, sort = newnum, name = newname))
+	return render_template('full_list.html', title = 'full-list', data1 = data1, form = form)
 
 
 @app.route("/checkoff/<int:test_id>", methods=['POST', 'GET'])
@@ -130,7 +151,7 @@ def checkoff(test_id):
 	setattr(task, "status", task.status+1)
 	db.session.commit()
 	flash('Item checked off', 'success')
-	return redirect(url_for('list', catname = var))
+	return redirect(url_for('home'))
 
 
 @app.route("/clear", methods=['POST', 'GET'])
@@ -142,3 +163,24 @@ def clear():
 		db.session.commit()
 
 	return redirect(url_for('home'))
+
+
+@app.route("/password", methods = ['POST', 'GET'])
+def password():
+	form = PwdForm()
+	if form.validate_on_submit():
+		if form.password1.data == form.password2.data:
+			user = User.query.filter_by(email = form.email.data)
+			if user:
+				e = form.email.data
+				user = User.query.filter_by(email = e).first()
+				user.password = form.password1.data
+				db.session.commit()
+				logout_user()
+				flash('password changed successfully, please try logging in again', 'info')
+				return redirect(url_for('login'))
+		else :
+			flash('There was an error, please try again', 'info')
+			return redirect(url_for('password'))
+
+	return render_template('change_pwd.html', title='Change-password', form = form)

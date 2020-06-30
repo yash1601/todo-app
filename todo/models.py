@@ -28,5 +28,6 @@ class Task(db.Model):
 	category = db.Column(db.Integer, nullable = False)
 	status = db.Column(db.Integer, default = 0)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+	date_posted = db.Column(db.DateTime, nullable = False, default=datetime.utcnow)
 
 db.create_all()

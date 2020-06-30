@@ -11,6 +11,12 @@ choices = [
 		("2", 'name of that special someone:'),
 	]
 
+choices2 = [
+		("1", 'priority'),
+		("2", 'adding order'),
+		("3", 'none')
+	]
+
 class RegistrationForm(FlaskForm):
 	
 	username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
@@ -61,3 +67,24 @@ class TaskForm(FlaskForm):
 	category = RadioField('Category:', choices = [('1','Personal'),('2','Work'),('3','Shopping'),('4','Others')])
 	priority = RadioField('priority:', choices = [('1','Urgent'),('2','Short Term'),('3','Long Time')])
 	submit = SubmitField('add task')
+
+
+class SearchForm(FlaskForm):
+	name = StringField('name: ', validators=[Length(min=2, max=20)])
+	sort = RadioField('sort by:(please select)', choices = [('1','priority'),('2','adding order'), ('3','none')])
+	submit = SubmitField('Go')
+
+class PwdForm(FlaskForm):
+	email = StringField('Enter your Email', validators=[DataRequired(), Email()])
+	password1 = PasswordField('Password', validators=[DataRequired()])
+	password2 = PasswordField('Password', validators=[DataRequired()])
+	submit = SubmitField('change password')
+	def validate_password(self, password1, password2):
+		if(password1.data != password2.data):
+			raise ValidationError('Passwords do not match, please try again')
+	
+	def validate_username(self, email):
+		user = User.query.filter_by(email=email.data).first()
+		if not user:
+			raise ValidationError('This email does not exist, please try again')
+

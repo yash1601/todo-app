@@ -39,8 +39,8 @@
 </div>
 </div>
 <div class="row">
-	<div class="col-md-3" style="background-color: #E882FA; padding-top: 5px; border-right: 1px solid black; padding-bottom: 50px;">
-		<div style="background-color: #A5FDFD;"><a href="{{ url_for('list', catname = 1) }}"><h3 style="border-left: 5px solid #249DCD; padding-left: 5px; padding-top: 5px;">PERSONAL</h3></a></div>
+	<div class="col-md-3" style="background-color: #E24FFC; padding-top: 5px; border-right: 1px solid black; padding-bottom: 50px;">
+		<div title="edit list" style="background-color: #A5FDFD;"><a href="{{ url_for('list', catname = 1, sort = 'none', name = '0') }}"><h3 style="border-left: 5px solid #249DCD; padding-left: 5px; padding-top: 5px;">PERSONAL</h3></a></div>
 		<ul>
 			{% for task in list1 %}
 				<li> <h5>{{ task.name }}</h5></li>
@@ -48,8 +48,8 @@
 		</ul>
 	</div>
 	
-	<div class="col-md-3" style="background-color: #EFADFB; padding-top: 5px; border-right: 1px solid black; padding-bottom: 50px;">
-		<div style="background-color: #A5FDFD;"><a href="{{ url_for('list', catname = 2) }}"><h3 style="border-left: 5px solid #249DCD; padding-left: 5px;">WORK</h3></a></div>
+	<div class="col-md-3" style="background-color: #E882FA; padding-top: 5px; border-right: 1px solid black; padding-bottom: 50px;">
+		<div title="edit list" style="background-color: #A5FDFD;"><a href="{{ url_for('list', catname = 2, sort = 'none', name = '0') }}"><h3 style="border-left: 5px solid #249DCD; padding-left: 5px;">WORK</h3></a></div>
  
 		<ul>
 			{% for task in list2 %}
@@ -59,7 +59,7 @@
 	</div>
 	
 	<div class="col-md-3" style="background-color: #F3C0FC; padding-top: 5px; border-right: 1px solid black; padding-bottom: 50px;">
-		<div title="view full list" style="background-color: #A5FDFD;"><a title="view full list" href="{{ url_for('list', catname = 3) }}"><h3 style="border-left: 5px solid #249DCD; padding-left: 5px;">SHOPPING</h3></a>
+		<div title="edit list" style="background-color: #A5FDFD;"><a title="view full list" href="{{ url_for('list', catname = 3, sort = 'none', name = '0') }}"><h3 style="border-left: 5px solid #249DCD; padding-left: 5px;">SHOPPING</h3></a>
 
 		</div>
 		<ul>
@@ -69,7 +69,7 @@
 	</div>
 	<div class="col-md-3" style="background-color: #F5D6FA; padding-top: 5px; border-right: 1px solid black; padding-bottom: 50px;">
 
-		<div style="background-color: #A5FDFD;"><a href="{{ url_for('list', catname = 4) }}"><h3 style="border-left: 5px solid #249DCD; padding-left: 5px;">OTHERS</h3></a></div>
+		<div title="edit list" style="background-color: #A5FDFD;"><a href="{{ url_for('list', catname = 4, sort = 'none', name = '0') }}"><h3 style="border-left: 5px solid #249DCD; padding-left: 5px;">OTHERS</h3></a></div>
 		<ul>
 			{% for task in list4 %}
 				<li> <h5>{{ task.name }}</h5></li>
