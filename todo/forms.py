@@ -64,8 +64,8 @@ class UpdateForm(FlaskForm):
 
 class TaskForm(FlaskForm):
 	title = StringField('enter task name here:', validators=[DataRequired(), Length(min=2, max=20)])
-	category = RadioField('Category:', choices = [('1','Personal'),('2','Work'),('3','Shopping'),('4','Others')])
-	priority = RadioField('priority:', choices = [('1','Urgent'),('2','Short Term'),('3','Long Time')])
+	category = RadioField('Category:',validators=[DataRequired()], choices = [('1','Personal'),('2','Work'),('3','Shopping'),('4','Others')])
+	priority = RadioField('priority:', validators=[DataRequired()], choices = [('1','Urgent'),('2','Short Term'),('3','Long Time')])
 	submit = SubmitField('add task')
 
 
@@ -76,8 +76,8 @@ class SearchForm(FlaskForm):
 
 class PwdForm(FlaskForm):
 	email = StringField('Enter your Email', validators=[DataRequired(), Email()])
-	password1 = PasswordField('Password', validators=[DataRequired()])
-	password2 = PasswordField('Password', validators=[DataRequired()])
+	password1 = PasswordField('New Password', validators=[DataRequired()])
+	password2 = PasswordField('Confirm Password', validators=[DataRequired()])
 	submit = SubmitField('change password')
 	def validate_password(self, password1, password2):
 		if(password1.data != password2.data):
